@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@200&family=Inter:wght@600&family=Playfair+Display&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Heebo"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: whitesmoke;
+      }
+      .navbar {
+        /* font-family: cursive; */
+        font-family: "Playfair Display", serif;
+      }
+      a {
+        text-decoration: none;
+      }
+      li {
+        list-style: none;
+      }
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: rgba(3, 8, 8, 0.897);
+        color: #fff;
+      }
+      .nav-links a {
+        color: #fff;
+      }
+      /* LOGO */
+      .logo {
+        font-size: 32px;
+      }
+      .menu {
+        display: flex;
+        gap: 1em;
+        font-size: 18px;
+      }
+      .menu li:hover {
+        background-color: #4c9e9e;
+        border-radius: 5px;
+        transition: 0.3s ease;
+      }
+      .menu li {
+        padding: 5px 34px;
+      }
+      /* DROPDOWN MENU */
+      .services {
+        position: relative;
+      }
+      .dropdown {
+        background-color: rgba(3, 8, 8, 0.897);
+        padding: 1em 0;
+        position: absolute; /*WITH RESPECT TO PARENT*/
+        display: none;
+        border-radius: 8px;
+        top: 35px;
+      }
+      .dropdown li + li {
+        margin-top: 10px;
+      }
+      .dropdown li {
+        padding: 0.5em 1em;
+        width: 8em;
+        text-align: center;
+      }
+      .dropdown li:hover {
+        background-color: #4c9e9e;
+      }
+      .services:hover .dropdown {
+        display: block;
+      }
+
+      .node {
+        cursor: pointer;
+      }
+
+      .node circle {
+        fill: #fff;
+        stroke: rgba(17, 211, 179, 0.952);
+        stroke-width: 3px;
+      }
+
+      .node text {
+        font: 12px sans-serif;
+      }
+
+      .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER SECTION -->
+    <nav class="navbar">
+      <!-- LOGO -->
+      <div class="logo" style="color: rgba(221, 158, 40, 0.897)">PATDEL</div>
+
+      <!-- Navigation Menu -->
+      <ul class="nav-links">
+        <!-- NAVIGATION MENU -->
+
+        <div class="menu">
+          <!-- <li><a href="#">Dashboard</a></li> -->
+
+          <li class="services">
+            <a href="#">Help</a>
+            <!-- DROPDOWN MENU -->
+            <ul class="dropdown">
+              <li><a href="#">Get Demo</a></li>
+              <li><a href="#">Help Request</a></li>
+              <li><a href="#">Call Request</a></li>
+            </ul>
+          </li>
+
+          <li><a href="/">Welcome USER</a></li>
+        </div>
+      </ul>
+    </nav>
+    <!-- Main Body Container -->
+    <div class="container">
+      <!-- Search Patent Number Div -->
+      <div class="patent_number" id="patent_number_div">
+        <div class="row">
+          <div class="col-md-6">
+            <div
+              class="input-group rounded text-center"
+              id="search_div"
+              style="margin-left: 350px; margin-top: 200px"
+            >
+              <label><h4 style="padding-top: 5px">Subject Patent</h4></label
+              >&nbsp;&nbsp;&nbsp;
+
+              <input
+                type="search"
+                id="patent"
+                class="form-control rounded"
+                placeholder="Enter Patent Number"
+                aria-label="Search"
+                aria-describedby="search-addon"
+              />
+              &nbsp; &nbsp;
+
+              <button
+                type="button"
+                class="btn"
+                onclick="getData()"
+                id="submit_btn"
+                style="
+            color: black;
+            background-color: rgba(221, 158, 40, 0.897);
+            width: 100px;
+          "
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Patent Number & Title -->
+      <div
+        class="patent_data"
+        id="patent_data_div"
+        style="
+          display: none;
+          margin-top: 10px;
+          background-color: rgba(252, 252, 252, 0.973);
+        "
+      >
+        <div class="row" style="padding-top: 10px">
+          <div class="col-md-2"></div>
+          <div class="col-md-3">
+            <p>
+              <span
+                style="
+                  font-size: 18px;
+                  font-family: Arial, Helvetica, sans-serif;
+                  font-weight: bold;
+                "
+                >Patent Number:</span
+              >
+              US623456A2
+            </p>
+          </div>
+          <div class="col-md-7">
+            <p>
+              <span
+                style="
+                  font-size: 18px;
+                  font-family: Arial, Helvetica, sans-serif;
+                  font-weight: bold;
+                "
+                >Patent Title:</span
+              >
+              System and method for security processing media streams
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Criteria & Bibliography -->
+      <div
+        class="patent_show_data"
+        id="patent_show_data_div"
+        style="display: none; margin-top: 10px"
+      >
+        <div class="row">
+          <div
+            class="col-md-6"
+            style="
+              background-color: #2c3539;
+              color: rgba(255, 255, 255, 0.884);
+              padding: 20px 10px 0px 10px;
+              border-radius: 20px;
+            "
+          >
+            <h3 style="font-family: 'Heebo', sans-serif">
+              Patent Bibliography
+            </h3>
+
+            <div class="row">
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952)">
+                  Current Assignee:
+                </h6>
+                <span>Comcast Cable LLC</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952)">Inventors:</h6>
+                <span>James William Fahrny,Charles Compton</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952)">Inventors:</h6>
+                <span>James William Fahrny,Charles Compton</span>
+              </div>
+            </div>
+
+            <hr />
+            <div class="row">
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952)">Priority Date:</h6>
+                <span>20/09/1998</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952)">
+                  Application Date:
+                </h6>
+                <span>26/08/2002</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952)">
+                  Publication Date:
+                </h6>
+                <span>16/07/2005</span>
+              </div>
+            </div>
+            <br />
+          </div>
+
+          <div
+            class="col-md-6"
+            style="
+              background-color: #fff;
+              color: #000;
+              padding-bottom: 20px;
+              border-radius: 20px;
+            "
+          >
+            <div class="col-md-12">
+              <h6
+                style="
+                  font-family: Arial, Helvetica, sans-serif;
+                  font-size: 20px;
+                  font-weight: bold;
+                  padding: 10px 0px;
+                "
+              >
+                Abstract:
+              </h6>
+              <span style="padding-left: 80px; padding-bottom: 30px"
+                >A keystream generator including at least two feedback shift
+                register structures. Each structure has input, intermediate and
+                output stages through which data bits are shifted serially in
+                response to a clock bits are shifted serially in response to a
+                clock signal. Keystream generator including at least two
+                feedback shift register structures. Each structure has input,
+                intermediate and output stages through which data bits are
+                shifted serially in response to a clock bits are shifted
+                serially in response to a clock signal.
+              </span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              id="body"
+              style="
+                height: 500px !important;
+                width: 1200px !important;
+                border: 2px solid #000;
+                border-radius: 20px;
+                overflow: scroll !important;
+                margin: 0 auto !important;
+                display: none;
+                background-color: white !important;
+              "
+            >
+              <h5 style="padding: 50px 0px 0px 30px">CLAIM TREE (US623456A2)</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <br />
+
+      <div id="select_patent_type" style="display: none">
+        <h4>CLAIM CHART :</h4>
+        <div
+          class="border border-warning"
+          style="
+            margin-top: 20px;
+            background-color: #3f4649;
+            color: rgba(255, 255, 255, 0.884);
+            text-align: center;
+            padding: 20px;
+            border-radius: 30px;
+          "
+        >
+          <h3
+            class="form-check form-check-inline"
+            style="color: rgba(69, 230, 181, 0.952)"
+          >
+            Type of Prior Art:
+          </h3>
+          <div class="form-check form-check-inline" style="margin-left: 30px">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio1"
+              value="102"
+            />
+            <label class="form-check-label" for="inlineRadio1"
+              ><h5 style="color: rgba(69, 230, 181, 0.952)">
+                X References / Single References
+              </h5></label
+            >
+          </div>
+          <div class="form-check form-check-inline" style="margin-left: 50px">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio2"
+              value="103"
+            />
+            <label class="form-check-label" for="inlineRadio2"
+              ><h5 style="color: rgba(69, 230, 181, 0.952)">
+                Y References / Combined References
+              </h5></label
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Required Input -->
+
+      <br />
+
+      <!-- <br /> -->
+      
+
+      <!-- Submit Button -->
+      <div class="row">
+        <div class="col-md-9">
+          <button
+            type="button"
+            class="btn"
+            id="ref_submit"
+            onclick="redirect_func()"
+            style="
+              margin-left: 600px;
+              display: none;
+              margin-top: 10px;
+              margin-bottom: 40px;
+              padding: 5px 20px;
+              padding-top: 9px;
+              
+            color: black;
+            background-color: rgba(221, 158, 40, 0.897);
+            width: 150px;
+          
+            "
+          >
+            <h5>Submit</h5>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript Code-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+    <!-- load the d3.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+
+    <script>
+      // document.getElementById('message').scrollTop = 9999999;
+
+      // function scrollToBottom() {
+
+      //     var objDiv = document.getElementById("message");
+      //     objDiv.scrollTop = objDiv.scrollHeight;
+      // }
+      //$('#scroll-to-bottom').scrollTop($('#scroll-to-bottom')[0].scrollHeight);
+
+      function myFunction(val) {
+        document.getElementById("myTable").deleteRow(val);
+      }
+
+      $(".add_row").click(function () {
+        $(".table").append(
+          '<tr><td>Claim Chart 4</td><td><input type="text" class="form-control" placeholder="Patent to be Mapped"/></td><td ><input type="text" class="form-control" placeholder="Enter claims no to be mapped"/></td><td> <input type="file" class="form-control" id="ocr_pdf" /></td><td style="text-align: center;"><button type="button" class="btn delete" onclick="myFunction(4)"> <img src="../trash2.png"/></button></td></tr>'
+        );
+      });
+
+      function getData() {
+        var val = document.getElementById("patent").value;
+        //console.log(val);
+        console.log("hello");
+        document.getElementById("patent_number_div").style.display = "none";
+        document.getElementById("patent_data_div").style.display = "block";
+        document.getElementById("patent_show_data_div").style.display = "block";
+        document.getElementById("select_patent_type").style.display = "block";
+        document.getElementById("body").style.display = "block";
+        document.getElementById("ref_submit").style.display = "block";
+        //document.getElementById("submit_claim").style.display = "block";
+
+        //document.getElementById("patent_map").style.display = "block";
+        //$('#scroll-to-bottom').scrollTop($('#scroll-to-bottom')[0].scrollHeight);
+      }
+
+      function showTable() {
+        console.log("hello 3");
+
+        document.getElementById("map_claim_table").style.display = "block";
+        document.getElementById("ref_submit").style.display = "block";
+        //$('#scroll-to-bottom').scrollTop($('#scroll-to-bottom')[0].scrollHeight);
+      }
+      function redirect_func() {
+        console.log("hi");
+        //var x = document.getElementById("inlineRadio").value;
+        var x = document.querySelector('input[name="inlineRadioOptions"]:checked').value;
+        console.log(x);
+        if (x==102){
+          window.location.href = "./keyFeaturesValidation102.html";
+
+        }else{
+          window.location.href = "./keyFeaturesValidation103.html";
+        }
+        
+      }
+      //var chatHistory = document.getElementById("body");
+      //chatHistory.scrollTop = chatHistory.scrollHeight;
+      //window.scrollTo(0,document.body.scrollHeight);
+    </script>
+    <script>
+      var treeData = [
+        {
+          name: "Independent Claim 1",
+          color: 0,
+          // "parent": "null",
+          children: [
+            {
+              name: "Dependent Claim 2",
+              // "parent": "Top Level",
+              color: 0,
+              children: [
+                {
+                  name: "Dependent Claim 3",
+                  color: 0,
+                  // "parent": "Level 2: A"
+                },
+                {
+                  name: "Dependent Claim 4",
+                  color: 0,
+                  //"parent": "Level 2: A"
+                },
+              ],
+            },
+            {
+              name: "Dependent Claim 5",
+              color: 0,
+              //"parent": "Top Level"
+              children: [
+                {
+                  name: "Dependent Claim 6",
+                  color: 0,
+                  // "parent": "Level 2: A"
+                },
+                {
+                  name: "Dependent Claim 7",
+                  color: 0,
+                  children: [
+                    {
+                      name: "Dependent Claim 8",
+                      color: 0,
+                      // "parent": "Level 2: A"
+                    },
+                    {
+                      name: "Dependent Claim 9",
+                      color: 0,
+                      //"parent": "Level 2: A"
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      // ************** Generate the tree diagram	 *****************
+      var margin = { top: 20, right: 120, bottom: 20, left: 150 },
+        width = 960 - margin.right - margin.left,
+        height = 400 - margin.top - margin.bottom;
+
+      var i = 0,
+        duration = 750,
+        root;
+
+      var tree = d3.layout.tree().size([height, width]);
+
+      var diagonal = d3.svg.diagonal().projection(function (d) {
+        return [d.y, d.x];
+      });
+
+      // var diagonal2 = d3.svg2.diagonal()
+      // 	.projection(function(d) { return [d.y, d.x]; });
+
+      var svg = d3
+        .select("#body")
+        .append("svg")
+        .attr("width", width + margin.right + margin.left)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // var svg2 = d3.select("body").append("svg")
+      // 	.attr("width", width + margin.right + margin.left)
+      // 	.attr("height", height + margin.top + margin.bottom)
+      //   .append("g")
+      // 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      root = treeData[0];
+      root.x0 = height / 2;
+      root.y0 = 0;
+
+      update(root);
+
+      // root1 = treeData[0];
+      // root1.x0 = height / 2;
+      // root1.y0 = 0;
+
+      // update(root1);
+
+      d3.select(self.frameElement).style("height", "500px");
+
+      function update(source) {
+        // Compute the new tree layout.
+        var nodes = tree.nodes(root).reverse(),
+          links = tree.links(nodes);
+
+        // Normalize for fixed-depth.
+        nodes.forEach(function (d) {
+          d.y = d.depth * 180;
+        });
+
+        // Update the nodes…
+        var node = svg.selectAll("g.node").data(nodes, function (d) {
+          return d.id || (d.id = ++i);
+        });
+
+        // Enter any new nodes at the parent's previous position.
+        var nodeEnter = node
+          .enter()
+          .append("g")
+          .attr("class", "node")
+          .attr("transform", function (d) {
+            return "translate(" + source.y0 + "," + source.x0 + ")";
+          })
+          .on("click", click);
+
+        nodeEnter
+          .append("circle")
+          .attr("r", 1e-6)
+          .style("fill", function (d) {
+            return d._children ? "lightsteelblue" : "#fff";
+          });
+
+        nodeEnter
+          .append("text")
+          .attr("x", function (d) {
+            return d.children || d._children ? 50 : 28;
+          })
+          .attr("y", function (d) {
+            return d.children || d._children ? 40 : 5;
+          })
+          //   .attr("dy", ".75em")
+          .attr("text-anchor", function (d) {
+            return d.children || d._children ? "end" : "start";
+          })
+          .text(function (d) {
+            return d.name;
+          })
+          .style("fill-opacity", 1e-6);
+
+        // Transition nodes to their new position.
+        var nodeUpdate = node
+          .transition()
+          .duration(duration)
+          .attr("transform", function (d) {
+            return "translate(" + d.y + "," + d.x + ")";
+          });
+
+        nodeUpdate
+          .select("circle")
+          .attr("r", 18)
+          .style("fill", function (d) {
+            return d.color ? "#75a4ff" : "#fff";
+          });
+
+        nodeUpdate.select("text").style("fill-opacity", 1);
+
+        // Transition exiting nodes to the parent's new position.
+        var nodeExit = node
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("transform", function (d) {
+            return "translate(" + source.y + "," + source.x + ")";
+          })
+          .remove();
+
+        nodeExit.select("circle").attr("r", 1e-6);
+
+        nodeExit.select("text").style("fill-opacity", 1e-6);
+
+        // Update the links…
+        var link = svg.selectAll("path.link").data(links, function (d) {
+          return d.target.id;
+        });
+
+        // Enter any new links at the parent's previous position.
+        link
+          .enter()
+          .insert("path", "g")
+          .attr("class", "link")
+          .attr("d", function (d) {
+            var o = { x: source.x0, y: source.y0 };
+            return diagonal({ source: o, target: o });
+          });
+
+        // Transition links to their new position.
+        link.transition().duration(duration).attr("d", diagonal);
+
+        // Transition exiting nodes to the parent's new position.
+        link
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("d", function (d) {
+            var o = { x: source.x, y: source.y };
+            return diagonal({ source: o, target: o });
+          })
+          .remove();
+
+        // Stash the old positions for transition.
+        nodes.forEach(function (d) {
+          d.x0 = d.x;
+          d.y0 = d.y;
+        });
+      }
+
+      // Toggle children on click.
+      var claim_arr = [];
+      function click(d) {
+        console.log(d);
+        var claim = d.name;
+        const claim_num = claim.split("Claim ");
+        if (claim_arr.indexOf(claim_num[1]) !== -1) {
+          var index = claim_arr.indexOf(claim_num[1]);
+          claim_arr.splice(index, 1);
+        } else {
+          claim_arr.push(claim_num[1]);
+        }
+
+        if (!d.color) {
+          d.color = 1;
+        } else {
+          d.color = 0;
+        }
+        update(d);
+        console.log(claim_arr);
+      }
+    </script>
+  </body>
+</html>

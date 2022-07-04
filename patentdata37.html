@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@200&family=Inter:wght@600&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Heebo"
+      rel="stylesheet"
+    />
+     <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: whitesmoke;
+      }
+      .navbar {
+        /* font-family: cursive; */
+        font-family: "Playfair Display", serif;
+      }
+      a {
+        text-decoration: none;
+      }
+      li {
+        list-style: none;
+      }
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: rgba(3, 8, 8, 0.897);
+        color: #fff;
+      }
+      .nav-links a {
+        color: #fff;
+      }
+      /* LOGO */
+      .logo {
+        font-size: 32px;
+      }
+      .menu {
+        display: flex;
+        gap: 1em;
+        font-size: 18px;
+      }
+      .menu li:hover {
+        background-color: #4c9e9e;
+        border-radius: 5px;
+        transition: 0.3s ease;
+      }
+      .menu li {
+        padding: 5px 34px;
+      }
+      /* DROPDOWN MENU */
+      .services {
+        position: relative;
+      }
+      .dropdown {
+        background-color: rgba(3, 8, 8, 0.897);
+        padding: 1em 0;
+        position: absolute; /*WITH RESPECT TO PARENT*/
+        display: none;
+        border-radius: 8px;
+        top: 35px;
+      }
+      .dropdown li + li {
+        margin-top: 10px;
+      }
+      .dropdown li {
+        padding: 0.5em 1em;
+        width: 8em;
+        text-align: center;
+      }
+      .dropdown li:hover {
+        background-color: #4c9e9e;
+      }
+      .services:hover .dropdown {
+        display: block;
+      }
+
+      .node {
+        cursor: pointer;
+      }
+
+      .node circle {
+        fill: #fff;
+        stroke: rgba(17, 211, 179, 0.952);
+        stroke-width: 3px;
+      }
+
+      .node text {
+        font: 12px sans-serif;
+      }
+
+      .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER SECTION -->
+    <nav class="navbar">
+      <!-- LOGO -->
+      <div class="logo">PATDEL</div>
+
+      <!-- Navigation Menu -->
+      <ul class="nav-links">
+
+        <!-- NAVIGATION MENU -->
+
+        <div class="menu">
+          <!-- <li><a href="#">Dashboard</a></li> -->
+
+          <li class="services">
+            <a href="#">Help</a>
+            <!-- DROPDOWN MENU -->
+            <ul class="dropdown">
+              <li><a href="#">Get Demo</a></li>
+              <li><a href="#">Help Request</a></li>
+              <li><a href="#">Call Request</a></li>
+            </ul>
+          </li>
+
+          <li><a href="/">Welcome USER</a></li>
+        </div>
+      </ul>
+    </nav>
+    <!-- Main Body Container -->
+    <div class="container">
+      <!-- Search Patent Number Div -->
+      <div class="patent_number" id="patent_number_div">
+        <div class="row">
+          <div class="col-md-6">
+            <div
+              class="input-group rounded text-center"
+              id="search_div"
+              style="margin-left: 350px; margin-top: 200px"
+            >
+              <label><h4 style="padding-top: 5px">Subject Patent</h4></label
+              >&nbsp;&nbsp;&nbsp;
+
+              <input
+                type="search"
+                id="patent"
+                class="form-control rounded"
+                placeholder="Enter Patent Number"
+                aria-label="Search"
+                aria-describedby="search-addon"
+              />
+              &nbsp; &nbsp;
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="getData()"
+                id="submit_btn"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Patent Number & Title -->
+      <div
+        class="patent_data"
+        id="patent_data_div"
+        style="
+          display: none;
+          margin-top: 20px;
+          background-color: rgba(252, 252, 252, 0.973);
+        "
+      >
+        <div class="row" style="padding-top: 15px">
+          <div class="col-md-2"></div>
+          <div class="col-md-3">
+            <p>
+              <span style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+                >Patent Number:</span
+              >
+              US623456A2
+            </p>
+          </div>
+          <div class="col-md-7">
+            <p>
+              <span style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; font-weight: bold;"
+                >Patent Title:</span
+              >
+              System and method for security processing media streams
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Criteria & Bibliography -->
+      <div
+        class="patent_show_data"
+        id="patent_show_data_div"
+        style="display: none; margin-top: 20px"
+      >
+        <div class="row">
+          <div class="col-md-6">
+            <h3 style="padding-left: 40px; padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 25px;
+            font-weight: bold;">Figure</h3>
+            
+            <!-- <div>
+                <img src="../patent_image2.png" width="90%" height="550px" alt="Patent Image" />
+            </div> -->
+
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="../patent_image2.png" class="d-block w-100" width="90%" height="630px" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="../patent_image3.png" class="d-block w-100" width="90%" height="630px" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="../patent_image4.png" class="d-block w-100" width="90%" height="630px" alt="...">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #000;"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #000;"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+          
+           
+          
+          </div>
+          <div class="col-md-6" style="background-color: #2c3539; color: rgba(255, 255, 255, 0.884); padding: 10px 10px 0px 10px;">
+            <h3 style="padding: 10px; font-family: 'Heebo', sans-serif; ">Patent Bibliography</h3>
+           
+            <div class="row">
+              <div class="col-md-4">
+                <h6 style="color:rgba(69, 230, 181, 0.952);">Current Assignee:</h6>
+                <span>Comcast Cable LLC</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color:rgba(69, 230, 181, 0.952);">Inventors:</h6>
+                <span>James William Fahrny,Charles Compton</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952);">Inventors:</h6>
+                <span>James William Fahrny,Charles Compton</span>
+              </div>
+            </div>
+            <br />
+            <hr>
+            <div class="row">
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952);">Priority Date:</h6>
+                <span>20/09/1998</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952);">Application Date:</h6>
+                <span>26/08/2002</span>
+              </div>
+              <div class="col-md-4">
+                <h6 style="color: rgba(69, 230, 181, 0.952);">Publication Date:</h6>
+                <span>16/07/2005</span>
+              </div>
+            </div>
+            <br />
+            <hr>
+            <div class="row" style="padding-bottom: 10px;">
+              <div class="col-md-10">
+                <h6 style="color:rgba(69, 230, 181, 0.952);">Classification:</h6>
+                <span
+                  >"H04L-009/06/62", "H04L-2209/12", "H04L-009/06/60",
+                  "H04L-2289/17"</span
+                >
+              </div>
+            </div>
+            
+            <div class="row" style="background-color: #fff; color:#000; padding-bottom: 20px;">
+                <div class="col-md-12">
+                  <h6 style="font-family: Arial, Helvetica, sans-serif; font-size: 16px;
+                  font-weight: bold; padding: 10px 0px;">Abstract: </h6>
+                  <span style="padding-left: 60px; padding-bottom: 30px;"
+                    >A keystream generator including at least two feedback shift
+                    register structures. Each structure has input, intermediate and
+                    output stages through which data bits are shifted serially in
+                    response to a clock signal, a plurality of logic elements
+                    respectively located between predetermined pairs of register
+                    stages, means for feeding the data bit shifted from the output
+                    stage into the input stage and into predetermined ones of the
+                    logic elements in accordance with a polynomial code.A plurality of logic elements
+                    respectively located between predetermined pairs of register
+                    stages, means for feeding the data bit shifted from the output
+                    stage into the input stage and into predetermined ones of the
+                    logic elements in accordance with a polynomial code.
+                  </span>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Patent Abstract -->
+      <!-- <div
+        class="patent_abstract"
+        id="patent_abstract_div"
+        style="display: none; margin-top: 20px"
+      >
+        <div class="row">
+          <div class="col-md-12">
+            <h3 style="padding-left: 40px">Abstract</h3>
+            <span style="padding-left: 60px"
+              >A keystream generator including at least two feedback shift
+              register structures. Each structure has input, intermediate and
+              output stages through which data bits are shifted serially in
+              response to a clock signal, a plurality of logic elements
+              respectively located between predetermined pairs of register
+              stages, means for feeding the data bit shifted from the output
+              stage into the input stage and into predetermined ones of the
+              logic elements in accordance with a polynomial code.
+            </span>
+          </div>
+        </div>
+      </div>
+      <br /> -->
+      <br/>
+
+      <!-- <div id="search_criteria" style="display: none; background-color: #2c3539; color: rgba(255, 255, 255, 0.884); padding: 10px;">
+        <h3 style="padding-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 25px;
+        font-weight: bold;color: rgba(255, 255, 255, 0.884);">Search Criteria</h3>
+        <div style="text-align: center;">
+         
+        </div>
+      </div> -->
+      <hr style="border: 1px solid gray;"/>
+      <div
+      class="patent_show_data"
+      id="patent_show_data_div2"
+      style="
+        display: none;
+        margin-top: 20px;
+        
+      "
+    >
+      <div class="row" >
+        <div class="col-md-4" style="background-color: #2c3539;margin-top: 10px; color:#fff; padding: 10px; padding-left: 15px; height: 500px; padding-top: 40px; border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
+          <h3 style="padding-left: 100px; padding-bottom: 20px;">Search Criteria</h3>
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group d-flex">
+                <label for="formControlRange"
+                  ><h6 style="padding-top: 7px; color: rgba(69, 230, 181, 0.952);">Date Type:</h6></label
+                >&nbsp; &nbsp; &nbsp; &nbsp;
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="date_type"
+                  id="success-outlined"
+                  checked
+                />
+                <label
+                  class="btn btn-outline-success"
+                  onclick="myFunction1()"
+                  for="success-outlined"
+                  >Priority</label
+                >&nbsp;
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="date_type"
+                  id="danger-outlined"
+                />
+                <label
+                  class="btn btn-outline-success"
+                  onclick="myFunction2()"
+                  for="danger-outlined"
+                  style="color:black; background-color: #fff;"
+                  >Application</label
+                >&nbsp;
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="date_type"
+                  id="primary-outlined"
+                />
+                <label
+                  class="btn btn-outline-success"
+                  onclick="myFunction3()"
+                  for="primary-outlined"
+                  style="color:black; background-color: #fff;"
+                  >Publication</label
+                >
+              </div>
+            </div>
+          </div>
+          <br /><br/>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="cutt_of_date"
+                  ><h6 style="padding-top: 5px; color: rgba(69, 230, 181, 0.952);">Cutt Of Date:</h6></label
+                >&nbsp; &nbsp; &nbsp; &nbsp;
+
+                <input type="date" id="cutt_of_date" style="height: 45px; width: 250px; padding-left: 10px; border-radius: 30px; padding-right: 10px;" value="" />
+              </div>
+            </div>
+          </div>
+          <br /><br/>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-group d-flex">
+                <label for="formFileSm"
+                  ><h6 style="padding-top: 2px; color: rgba(69, 230, 181, 0.952)">Known References:</h6></label
+                >&nbsp; &nbsp;
+                <input
+                  class="form-control form-control-sm"
+                  id="csvFile"
+                  type="file"
+                  accept=".csv,.xlsx"
+                  style="width: 100px; height: 40px;"
+                />&nbsp;
+                <input
+                  class="form-control"
+                  id="formFileSm"
+                  type="text"
+                  style="width: 200px; height: 40px;"
+                  placeholder="Enter Patent Numbers"
+                />
+              </div>
+            </div>
+          </div>
+          <br /><br/>
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="form-group d-flex justify-content-center">
+                <label for="formControlRange"
+                  ><h6 style="padding-top: 2px; color: rgba(69, 230, 181, 0.952);">
+                    Project Reference No:
+                  </h6></label
+                >&nbsp; &nbsp;
+                <input type="text" style="height: 40px;" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-8"
+          style="padding: 10px;"
+        >
+
+        <div
+        id="body"
+        style="
+          height: 500px !important;
+          width: 900px !important;
+          border: 2px solid #000;
+          overflow: scroll !important;
+          margin: 0 auto !important;
+          display: none;
+          background-color: white !important;
+        "
+      ></div>
+         
+        </div>
+      </div>
+    </div>
+
+      <br/>
+
+      <!-- Submit Button -->
+      <div class="row">
+        <div class="col-md-9">
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            id="submit_claim"
+            style="
+              margin-left: 580px;
+              display: none;
+              margin-top: 10px;
+              margin-bottom: 10px;
+              color: rgba(69, 230, 181, 0.952);
+            "
+            onclick="getfiledata()"
+          >
+            Submit Claim
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript Code-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <!-- load the d3.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+
+    <script>
+      function getData() {
+        var val = document.getElementById("patent").value;
+        //console.log(val);
+        console.log("hello");
+        document.getElementById("patent_number_div").style.display = "none";
+        document.getElementById("patent_data_div").style.display = "block";
+        document.getElementById("patent_show_data_div").style.display = "block";
+        document.getElementById("patent_show_data_div2").style.display = "block";
+        document.getElementById("body").style.display = "block";
+        document.getElementById("submit_claim").style.display = "block";
+        document.getElementById("search_criteria").style.display = "block";
+      }
+    </script>
+
+    <script>
+      var treeData = [
+        {
+          name: "Independent Claim 1",
+          color: 0,
+          // "parent": "null",
+          children: [
+            {
+              name: "Dependent Claim 2",
+              // "parent": "Top Level",
+              color: 0,
+              children: [
+                {
+                  name: "Dependent Claim 3",
+                  color: 0,
+                  // "parent": "Level 2: A"
+                },
+                {
+                  name: "Dependent Claim 4",
+                  color: 0,
+                  //"parent": "Level 2: A"
+                },
+              ],
+            },
+            {
+              name: "Dependent Claim 5",
+              color: 0,
+              //"parent": "Top Level"
+              children: [
+                {
+                  name: "Dependent Claim 6",
+                  color: 0,
+                  // "parent": "Level 2: A"
+                },
+                {
+                  name: "Dependent Claim 7",
+                  color: 0,
+                  children: [
+                    {
+                      name: "Dependent Claim 8",
+                      color: 0,
+                      // "parent": "Level 2: A"
+                    },
+                    {
+                      name: "Dependent Claim 9",
+                      color: 0,
+                      //"parent": "Level 2: A"
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      // ************** Generate the tree diagram	 *****************
+      var margin = { top: 20, right: 120, bottom: 20, left: 150 },
+        width = 960 - margin.right - margin.left,
+        height = 500 - margin.top - margin.bottom;
+
+      var i = 0,
+        duration = 750,
+        root;
+
+      var tree = d3.layout.tree().size([height, width]);
+
+      var diagonal = d3.svg.diagonal().projection(function (d) {
+        return [d.y, d.x];
+      });
+
+      // var diagonal2 = d3.svg2.diagonal()
+      // 	.projection(function(d) { return [d.y, d.x]; });
+
+      var svg = d3
+        .select("#body")
+        .append("svg")
+        .attr("width", width + margin.right + margin.left)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // var svg2 = d3.select("body").append("svg")
+      // 	.attr("width", width + margin.right + margin.left)
+      // 	.attr("height", height + margin.top + margin.bottom)
+      //   .append("g")
+      // 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      root = treeData[0];
+      root.x0 = height / 2;
+      root.y0 = 0;
+
+      update(root);
+
+      // root1 = treeData[0];
+      // root1.x0 = height / 2;
+      // root1.y0 = 0;
+
+      // update(root1);
+
+      d3.select(self.frameElement).style("height", "500px");
+
+      function update(source) {
+        // Compute the new tree layout.
+        var nodes = tree.nodes(root).reverse(),
+          links = tree.links(nodes);
+
+        // Normalize for fixed-depth.
+        nodes.forEach(function (d) {
+          d.y = d.depth * 180;
+        });
+
+        // Update the nodes…
+        var node = svg.selectAll("g.node").data(nodes, function (d) {
+          return d.id || (d.id = ++i);
+        });
+
+        // Enter any new nodes at the parent's previous position.
+        var nodeEnter = node
+          .enter()
+          .append("g")
+          .attr("class", "node")
+          .attr("transform", function (d) {
+            return "translate(" + source.y0 + "," + source.x0 + ")";
+          })
+          .on("click", click);
+
+        nodeEnter
+          .append("circle")
+          .attr("r", 1e-6)
+          .style("fill", function (d) {
+            return d._children ? "lightsteelblue" : "#fff";
+          });
+
+        nodeEnter
+          .append("text")
+          .attr("x", function (d) {
+            return d.children || d._children ? 50 : 28;
+          })
+          .attr("y", function (d) {
+            return d.children || d._children ? 40 : 5;
+          })
+          //   .attr("dy", ".75em")
+          .attr("text-anchor", function (d) {
+            return d.children || d._children ? "end" : "start";
+          })
+          .text(function (d) {
+            return d.name;
+          })
+          .style("fill-opacity", 1e-6);
+
+        // Transition nodes to their new position.
+        var nodeUpdate = node
+          .transition()
+          .duration(duration)
+          .attr("transform", function (d) {
+            return "translate(" + d.y + "," + d.x + ")";
+          });
+
+        nodeUpdate
+          .select("circle")
+          .attr("r", 18)
+          .style("fill", function (d) {
+            return d.color ? "#75a4ff" : "#fff";
+          });
+
+        nodeUpdate.select("text").style("fill-opacity", 1);
+
+        // Transition exiting nodes to the parent's new position.
+        var nodeExit = node
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("transform", function (d) {
+            return "translate(" + source.y + "," + source.x + ")";
+          })
+          .remove();
+
+        nodeExit.select("circle").attr("r", 1e-6);
+
+        nodeExit.select("text").style("fill-opacity", 1e-6);
+
+        // Update the links…
+        var link = svg.selectAll("path.link").data(links, function (d) {
+          return d.target.id;
+        });
+
+        // Enter any new links at the parent's previous position.
+        link
+          .enter()
+          .insert("path", "g")
+          .attr("class", "link")
+          .attr("d", function (d) {
+            var o = { x: source.x0, y: source.y0 };
+            return diagonal({ source: o, target: o });
+          });
+
+        // Transition links to their new position.
+        link.transition().duration(duration).attr("d", diagonal);
+
+        // Transition exiting nodes to the parent's new position.
+        link
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("d", function (d) {
+            var o = { x: source.x, y: source.y };
+            return diagonal({ source: o, target: o });
+          })
+          .remove();
+
+        // Stash the old positions for transition.
+        nodes.forEach(function (d) {
+          d.x0 = d.x;
+          d.y0 = d.y;
+        });
+      }
+
+      // Toggle children on click.
+      var claim_arr = [];
+      function click(d) {
+        console.log(d);
+        var claim = d.name;
+        const claim_num = claim.split("Claim ");
+        if (claim_arr.indexOf(claim_num[1]) !== -1) {
+          var index = claim_arr.indexOf(claim_num[1]);
+          claim_arr.splice(index, 1);
+        } else {
+          claim_arr.push(claim_num[1]);
+        }
+
+        if (!d.color) {
+          d.color = 1;
+        } else {
+          d.color = 0;
+        }
+        update(d);
+        console.log(claim_arr);
+      }
+    </script>
+  </body>
+</html>

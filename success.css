@@ -1,0 +1,106 @@
+.dashboard {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.dashboard-left {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  background: lightgreen;
+  height: 100vh;
+  border-radius: 0rem 5rem 5rem 0rem;
+}
+.dashboard-left h1 {
+  margin-left: 30px;
+  font-size: 50px;
+  margin-top: 300px;
+  color: #4552c1;
+  /*border: 2px solid gray;*/
+}
+.dashboard-right {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  height: 100vh;
+}
+.heading {
+  text-decoration-line: underline;
+  /*text-decoration-style: wavy;*/
+  text-decoration-color: lightgreen;
+  margin: 3px;
+}
+.card-container {
+  display: flex;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 15px; /* 5px rounded corners */
+  width: 50%;
+  height: 280px;
+  margin: 80px;
+  margin-top: 200px;
+  margin-left: 200px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+.container a{
+  padding: 30px;
+  padding-top: 50px;
+  font-size: 30px;
+  text-decoration: none;
+  padding-left: 20px;
+}
+.container b {
+  padding-top: 20px;
+  font-size: 50px;
+  color: #4f4f4f;
+}
+
+.container1 {
+  padding: 5px 16px;
+}
+.container1 b {
+  font-size: 20px;
+  padding: 3px;
+  color: #4f4f4f;
+}
+.btn-div9 {
+  display: flex;
+}
+
+.form-main9 button {
+  width: fit-content;
+  background: green;
+  color: white;
+  margin-left: 200px;
+  margin-top: 30px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  font-size: medium;
+}
+.logout_class{
+  margin-top: 590px;
+  margin-bottom: 130px;
+  margin-left: 10px;
+  border: 2px solid gray;
+  border-radius: 3px;
+  background-color: #4552c1;
+  color:white;
+  cursor: pointer;
+}
+
+
